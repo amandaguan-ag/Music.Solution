@@ -1,11 +1,37 @@
-// public class RecordController : Controller
-// {
-//     private readonly ApplicationDbContext _db;
+using Microsoft.AspNetCore.Mvc;
+using Music.Models;
+using System.Collections.Generic;
 
-//     public RecordController(ApplicationDbContext db)
-//     {
-//         _db = db;
-//     }
+namespace Music.Controllers
+{
+    public class RecordController : Controller
+    {
+        [HttpGet("/records")]
+        public ActionResult Index()
+        {
+            List<Record> allRecords = Record.GetAll();
+            return View(allRecords);
+        }
 
-//     // Implement actions like: Index, Details, Create, Edit, Delete etc.
-// }
+        [HttpGet("/records/new")]
+        public ActionResult New()
+        {
+            return View();
+        }
+
+        [HttpPost("/records")]
+        public ActionResult Create(string title, int artistId)
+        {
+            Artist artist = Artist.Find(artistId);
+            Record newRecord = new Record(title, artist);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("/records/{id}")]
+        public ActionResult Show(int id)
+        {
+            Record record = Record.Find(id);
+            return View(record);
+        }
+    }
+}

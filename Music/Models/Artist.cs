@@ -1,27 +1,40 @@
 using System.Collections.Generic;
 
-public class Artist
+namespace Music.Models
 {
-    private static List<Artist> _instances = new List<Artist>();
-
-    public Artist()
+    public class Artist
     {
-        this.Records = new List<Record>();
-        _instances.Add(this);
-    }
+        private static List<Artist> _instances = new List<Artist> { };
+        public string Name { get; set; }
+        public int Id { get; }
+        public List<Record> Records { get; set; }
 
-    public int ArtistId { get; set; }
-    public string Name { get; set; }
+        public Artist(string artistName)
+        {
+            Name = artistName;
+            _instances.Add(this);
+            Id = _instances.Count;
+            Records = new List<Record> { };
+        }
 
-    public virtual ICollection<Record> Records { get; set; }
+        public static List<Artist> GetAll()
+        {
+            return _instances;
+        }
 
-    public static List<Artist> GetAll()
-    {
-        return _instances;
-    }
+        public static void ClearAll()
+        {
+            _instances.Clear();
+        }
 
-    public static void ClearAll()
-    {
-        _instances.Clear();
+        public static Artist Find(int searchId)
+        {
+            return _instances[searchId - 1];
+        }
+
+        public void AddRecord(Record record)
+        {
+            Records.Add(record);
+        }
     }
 }

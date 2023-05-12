@@ -1,21 +1,35 @@
-// public class ArtistController : Controller
-// {
-//     private readonly ApplicationDbContext _db;
+using Microsoft.AspNetCore.Mvc;
+using Music.Models;
+using System.Collections.Generic;
 
-//     public ArtistController(ApplicationDbContext db)
-//     {
-//         _db = db;
-//     }
+namespace Music.Controllers
+{
+    public class ArtistController : Controller
+    {
+        public ActionResult Index()
+        {
+            List<Artist> allArtists = Artist.GetAll();
+            return View(allArtists);
+        }
 
-//     // Implement actions like: Index, Details, Create, Edit, Delete etc.
-//     public IActionResult Search(string name)
-// {
-//     var artists = _db.Artists
-//         .Where(a => a.Name.ToLower().Contains(name.ToLower()))
-//         .Include(a => a.Records)
-//         .ToList();
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-//     return View(artists);  // You will need to create a corresponding view named "Search.cshtml"
-// }
+        [HttpPost]
+        public ActionResult Create(Artist artist)
+        {
+            // Add code to save artist to database here
+            return RedirectToAction("Index");
+        }
 
-// }
+        public ActionResult Details(int id)
+        {
+            Artist artist = Artist.Find(id);
+            return View(artist);
+        }
+
+        // Other action methods as required...
+    }
+}
