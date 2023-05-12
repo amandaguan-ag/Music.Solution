@@ -1,7 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Music.Models;
 using System.Collections.Generic;
-// using Music.Models;
-using System;
 
 namespace Music.Tests
 {
@@ -11,50 +10,80 @@ namespace Music.Tests
         [TestMethod]
         public void ArtistConstructor_CreatesInstanceOfArtist_Artist()
         {
-            Artist newArtist = new Artist();
+            Artist newArtist = new Artist("test artist");
             Assert.AreEqual(typeof(Artist), newArtist.GetType());
         }
 
         [TestMethod]
-        public void GetArtistId_ReturnArtistId_Int()
+        public void GetName_ReturnsName_String()
         {
-            //Arrange
-            int id = 1;
-            Artist newArtist = new Artist() { ArtistId = id };
-
-            //Act
-            int result = newArtist.ArtistId;
-
-            //Assert
-            Assert.AreEqual(id, result);
-        }
-
-        [TestMethod]
-        public void GetName_ReturnArtistName_String()
-        {
-            //Arrange
-            string name = "JS Bach";
-            Artist newArtist = new Artist() { Name = name };
-
-            //Act
+            string name = "Test Artist";
+            Artist newArtist = new Artist(name);
             string result = newArtist.Name;
-
-            //Assert
             Assert.AreEqual(name, result);
         }
 
         [TestMethod]
-        public void GetRecords_ReturnArtistRecords_RecordsCollection()
+        public void GetId_ReturnsArtistId_Int()
         {
-            //Arrange
-            Artist newArtist = new Artist();
-            List<Record> records = new List<Record>();
+            // Arrange
+            Artist.ClearAll(); // cleanup before test
+            string name = "Test artist";
+            Artist newArtist = new Artist(name);
 
-            //Act
-            ICollection<Record> result = newArtist.Records;
+            // Act
+            int result = newArtist.Id;
 
-            //Assert
-            CollectionAssert.AreEqual(records, (System.Collections.ICollection)result);
+            // Assert
+            Assert.AreEqual(1, result);
+        }
+
+        [TestMethod]
+        public void GetAll_ReturnsAllArtistObjects_ArtistList()
+        {
+            // Arrange
+            Artist.ClearAll(); // cleanup before test
+            string name01 = "Test artist 1";
+            string name02 = "Test artist 2";
+            Artist newArtist1 = new Artist(name01);
+            Artist newArtist2 = new Artist(name02);
+            List<Artist> newList = new List<Artist> { newArtist1, newArtist2 };
+
+            // Act
+            List<Artist> result = Artist.GetAll();
+
+            // Assert
+            CollectionAssert.AreEqual(newList, result);
+        }
+
+        [TestMethod]
+        public void Find_ReturnsCorrectArtist_Artist()
+        {
+            // Arrange
+            Artist.ClearAll();
+            string name1 = "Test artist 1";
+            string name2 = "Test artist 2";
+            Artist newArtist1 = new Artist(name1);
+            Artist newArtist2 = new Artist(name2);
+
+            // Act
+            Artist result = Artist.Find(2);
+
+            // Assert
+            Assert.AreEqual(newArtist2, result);
+        }
+
+        [TestMethod]
+        public void AddRecord_AssociatesRecordWithArtist_RecordList()
+        {
+            string artistName = "Test Artist";
+            Artist newArtist = new Artist(artistName);
+            string title = "Test Record";
+            Record newRecord = new Record(title, newArtist);
+            List<Record> newList = new List<Record> { newRecord };
+            newArtist.AddRecord(newRecord);
+            List<Record> result = newArtist.Records;
+            CollectionAssert.AreEqual(newList, result);
         }
     }
 }
