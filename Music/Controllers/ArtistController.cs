@@ -1,35 +1,36 @@
-using Microsoft.AspNetCore.Mvc;
-using Music.Models;
-using System.Collections.Generic;
+// using Microsoft.AspNetCore.Mvc;
+// using Music.Models;
+// using System.Collections.Generic;
 
-namespace Music.Controllers
-{
-    public class ArtistController : Controller
-    {
-        public ActionResult Index()
-        {
-            List<Artist> allArtists = Artist.GetAll();
-            return View(allArtists);
-        }
+// namespace Music.Controllers
+// {
+//     public class ArtistsController : Controller
+//     {
+//         [HttpGet("/artists")]
+//         public ActionResult Index()
+//         {
+//             List<Artist> allArtists = Artist.GetAll();
+//             return View(allArtists);
+//         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
+//         [HttpGet("/artists/new")]
+//         public ActionResult New()
+//         {
+//             return View();
+//         }
 
-        [HttpPost]
-        public ActionResult Create(Artist artist)
-        {
-            // Add code to save artist to database here
-            return RedirectToAction("Index");
-        }
+//         [HttpPost("/artists")]
+//         public ActionResult Create(string artistName)
+//         {
+//             Artist newArtist = new Artist(artistName);
+//             return RedirectToAction("Index");
+//         }
 
-        public ActionResult Details(int id)
-        {
-            Artist artist = Artist.Find(id);
-            return View(artist);
-        }
-
-        // Other action methods as required...
-    }
-}
+//         [HttpGet("/artists/{id}")]
+//         public ActionResult Show(int id)
+//         {
+//             Artist foundArtist = Artist.Find(id);
+//             return View(foundArtist);
+//         }
+//     }
+// }

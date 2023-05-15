@@ -6,15 +6,13 @@ namespace Music.Models
     {
         public int RecordId { get; set; }
         public string Title { get; set; }
-        public int ArtistId { get; set; }
-        public virtual Artist Artist { get; set; }
-
+        public string ArtistName { get; set; }
         private static List<Record> _instances = new List<Record> { };
 
-        public Record(string title, Artist artist)
+        public Record(string title, string artistName)
         {
             Title = title;
-            Artist = artist;
+            ArtistName = artistName;
             _instances.Add(this);
             RecordId = _instances.Count;
         }
@@ -28,6 +26,10 @@ namespace Music.Models
         {
             return _instances[searchId - 1];
         }
-    }
 
+        public static void ClearAll()
+        {
+            _instances.Clear();
+        }
+    }
 }
