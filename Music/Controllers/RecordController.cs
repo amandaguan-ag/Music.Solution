@@ -32,5 +32,11 @@ namespace Music.Controllers
             Record foundRecord = Record.Find(id);
             return View(foundRecord);
         }
+        [HttpPost("/records/delete")]
+        public ActionResult DeleteAll()
+        {
+            Record.ClearAll();
+            return View();
+        }
     }
 }

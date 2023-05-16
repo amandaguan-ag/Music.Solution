@@ -22,9 +22,9 @@ namespace Music.Models
             return _instances;
         }
 
-        public static Record Find(int searchId)
+        public static Record Find(int id)
         {
-            return _instances[searchId - 1];
+            return _instances[id - 1];
         }
 
         public static void ClearAll()
