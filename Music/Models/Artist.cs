@@ -6,7 +6,7 @@ namespace Music.Models
     {
         private static List<Artist> _instances = new List<Artist> { };
         public string Name { get; set; }
-        public int ArtistId { get; set; }
+        public int ArtistId { get; }
         public List<Record> Records { get; set; }
 
         public Artist(string artistName)
@@ -17,14 +17,14 @@ namespace Music.Models
             Records = new List<Record> { };
         }
 
-        public static List<Artist> GetAll()
-        {
-            return _instances;
-        }
-
         public static void ClearAll()
         {
             _instances.Clear();
+        }
+
+        public static List<Artist> GetAll()
+        {
+            return _instances;
         }
 
         public static Artist Find(int searchId)

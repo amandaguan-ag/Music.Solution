@@ -6,38 +6,33 @@ namespace Music.Controllers
 {
     public class RecordsController : Controller
     {
-        [HttpGet("/records")]
-        public ActionResult Index()
+       [HttpGet("/artists/{artistId}/records/new")]
+        public ActionResult New(int artistId)
         {
-            List<Record> allRecords = Record.GetAll();
-            return View(allRecords);
+            Artist artist = Artist.Find(artistId);
+            if (artist == null)
+            {
+                // Handle the case where no artist was found.
+                // You could return a different view, or redirect to a different action.
+                return NotFound(); // Returns a 404 Not Found response.
+            }
+            return View(artist);
         }
 
-        [HttpGet("/records/new")]
-        public ActionResult New()
+        [HttpGet("/artists/{artistId}/records/{recordId}")]
+        public ActionResult Show(int artistId, int recordId)
         {
-            return View();
-        }
-
-        [HttpPost("/records")]
-        public ActionResult Create(string recordTitle, string artistName)
-        {
-            Record newRecord = new Record(recordTitle, artistName);
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet("/records/{id}")]
-        public ActionResult Show(int id)
-        {
-            Record foundRecord = Record.Find(id);
-            return View(foundRecord);
-        }
-
-        [HttpPost("/records/delete")]
-        public ActionResult DeleteAll()
-        {
-            Record.ClearAll();
-            return View();
+            Record record = Record.Find(recordId);
+            Artist artist = Artist.Find(artistId);
+            if (record == null || artist == null)
+            {
+                // Handle the case where no record or artist was found.
+                return NotFound();
+            }
+            Dictionary<string, object> model = new Dictionary<string, object>();
+            model.Add("artist", artist);
+            model.Add("record", record);
+            return View(model);
         }
     }
 }

@@ -5,14 +5,15 @@ namespace Music.Models
     public class Record
     {
         public int RecordId { get; set; }
-        public string Title { get; set; }
+        public string Title { get; }
         public string ArtistName { get; set; }
+        public int ArtistId { get; set; }
+
         private static List<Record> _instances = new List<Record> { };
 
-        public Record(string title, string artistName)
+        public Record(string title)
         {
             Title = title;
-            ArtistName = artistName;
             _instances.Add(this);
             RecordId = _instances.Count;
         }
@@ -22,14 +23,14 @@ namespace Music.Models
             return _instances;
         }
 
-        public static Record Find(int id)
-        {
-            return _instances[id - 1];
-        }
-
         public static void ClearAll()
         {
             _instances.Clear();
+        }
+
+        public static Record Find(int id)
+        {
+            return _instances[id - 1];
         }
     }
 }
