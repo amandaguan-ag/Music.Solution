@@ -1,35 +1,36 @@
-// using Microsoft.AspNetCore.Mvc;
-// using Music.Models;
+using Microsoft.AspNetCore.Mvc;
+using Music.Models;
+using System.Collections.Generic;
 
-// namespace Music.Controllers
-// {
-//     public class RecordsController : Controller
-//     {
-//         [HttpGet("/records/new")]
-//         public ActionResult New()
-//         {
-//             return View();
-//         }
+namespace Music.Controllers
+{
+    public class RecordsController : Controller
+    {
+        [HttpGet("/records")]
+        public ActionResult Index()
+        {
+            List<Record> allRecords = Record.GetAll();
+            return View(allRecords);
+        }
 
-//         [HttpPost("/records")]
-//         public ActionResult Create(string recordTitle)
-//         {
-//             Record newRecord = new Record(recordTitle);
-//             return RedirectToAction("Index");
-//         }
+        [HttpGet("/records/new")]
+        public ActionResult New()
+        {
+            return View();
+        }
 
-//         [HttpGet("/records")]
-//         public ActionResult Index()
-//         {
-//             List<Record> allRecords = Record.GetAll();
-//             return View(allRecords);
-//         }
+        [HttpPost("/records")]
+        public ActionResult Create(string recordTitle, string artistName)
+        {
+            Record newRecord = new Record(recordTitle, artistName);
+            return RedirectToAction("Index");
+        }
 
-//         [HttpGet("/records/{id}")]
-//         public ActionResult Show(int id)
-//         {
-//             Record foundRecord = Record.Find(id);
-//             return View(foundRecord);
-//         }
-//     }
-// }
+        [HttpGet("/records/{id}")]
+        public ActionResult Show(int id)
+        {
+            Record foundRecord = Record.Find(id);
+            return View(foundRecord);
+        }
+    }
+}
