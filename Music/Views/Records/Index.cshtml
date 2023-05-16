@@ -1,13 +1,7 @@
+@{
+  Layout = "_Layout";
+}
 @using Music.Models;
-@model List<Record>
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Records List</title>
-</head>
-<body>
     <h1>Records</h1>
     <ul>
         @foreach (Record record in Model)
@@ -16,5 +10,3 @@
         }
     </ul>
     <a href="/artists">Back to Artists</a>
-</body>
-</html>

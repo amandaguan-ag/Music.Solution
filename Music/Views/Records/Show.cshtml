@@ -1,14 +1,13 @@
+@{
+  Layout = "_Layout";
+}
 @using Music.Models;
-@model Record
+@model Dictionary<string, object>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>@Model.Title Details</title>
-</head>
-<body>
-    <h1>@Model.Title by @Model.ArtistName</h1>
-    <a href="/records">Back to Records</a>
-</body>
-</html>
+<h1>Music Record Details: </h1>
+
+<h2>@((Record)Model["record"]).Title</h2>
+<h3>Artist: @((Artist)Model["artist"]).Name</h3>
+
+<a href='/artists/@((Artist)Model["artist"]).ArtistId/records/new'>Add another record</a>
+<a href='/artists'>View all artists</a>
