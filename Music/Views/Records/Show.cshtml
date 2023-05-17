@@ -4,10 +4,15 @@
 @using Music.Models;
 @model Dictionary<string, object>
 
+@{
+  var artist = Model["artist"] as Artist;
+  var record = Model["record"] as Record;
+}
+
 <h1>Music Record Details: </h1>
 
-<h2>@((Record)Model["record"]).Title</h2>
-<h3>Artist: @((Artist)Model["artist"]).Name</h3>
+<h2>@record.Title</h2>
+<h3>Artist: @artist.Name</h3>
 
 <a href='/artists/@((Artist)Model["artist"]).ArtistId/records/new'>Add another record</a>
 <a href='/artists'>View all artists</a>
