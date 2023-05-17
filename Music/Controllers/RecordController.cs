@@ -1,38 +1,42 @@
 using Microsoft.AspNetCore.Mvc;
 using Music.Models;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Music.Controllers
 {
-    public class RecordsController : Controller
-    {
-        [HttpGet("/artists/{artistId}/records/new")]
-        public ActionResult New(int artistId)
-        {
-            Artist artist = Artist.Find(artistId);
-            if (artist == null)
-            {
-                // Handle the case where no artist was found.
-                // You could return a different view, or redirect to a different action.
-                return NotFound(); // Returns a 404 Not Found response.
-            }
-            return View(artist);
-        }
+  public class RecordsController : Controller
+  {
+    private readonly MusicContext _db;
 
-        [HttpGet("/artists/{artistId}/records/{recordId}")]
-        public ActionResult Show(int artistId, int recordId)
-        {
-            Record record = Record.Find(recordId);
-            Artist artist = Artist.Find(artistId);
-            if (record == null || artist == null)
-            {
-                // Handle the case where no record or artist was found.
-                return NotFound();
-            }
-            Dictionary<string, object> model = new Dictionary<string, object>();
-            model.Add("artist", artist);
-            model.Add("record", record);
-            return View(model);
-        }
+    public RecordsController(MusicContext db)
+    {
+      _db = db;
     }
+
+    public ActionResult Index()
+    {
+      List<Record> model = _db.Records.ToList();
+      return View(model);
+    }
+
+    public ActionResult Create()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult Create(Record record)
+    {
+      _db.Records.Add(record);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Details(int id)
+    {
+      Record thisRecord = _db.Records.FirstOrDefault(record => record.RecordId == id);
+      return View(thisRecord);
+    }
+  }
 }

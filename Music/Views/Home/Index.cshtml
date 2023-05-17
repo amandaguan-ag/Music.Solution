@@ -1,7 +1,7 @@
 @{
   Layout = "_Layout";
 }
-    <h1>Welcome to the Music Management System</h1>
-    <p>Organize your music records by artists.</p>
-    <a href="/artists">View All Artists</a>
-    <a href="/artists/new">Add a New Artist</a>
+
+<h1>Welcome to the CD Record!</h1>
+<p>@Html.ActionLink("See all records", "Index", "Records")</p> 
+<p>@Html.ActionLink("Add new record", "Create")</p>

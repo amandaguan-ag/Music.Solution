@@ -1,0 +1,15 @@
+@{
+    Layout = "_Layout";
+}
+
+@model Music.Models.Record
+
+<h4>Add a new record</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.LabelFor(model => model.Title)
+    @Html.TextBoxFor(model => model.Title)
+    <input type="submit" value="Add new record" />
+}
+<p>@Html.ActionLink("Show all records", "Index")</p>

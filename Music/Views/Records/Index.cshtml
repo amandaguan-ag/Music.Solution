@@ -1,12 +1,16 @@
 @{
   Layout = "_Layout";
 }
+
 @using Music.Models;
-    <h1>Records</h1>
-    <ul>
-        @foreach (Record record in Model)
-        {
-            <li><a href="/artists/@record.ArtistId/records/@record.RecordId">@record.Title</a></li>
-        }
-    </ul>
-    <a href="/artists">Back to Artists</a>
+
+<h1>Records</h1>
+
+<ul>
+  @foreach(Record record in Model)
+  {
+    <li>@Html.ActionLink($"{record.Title}", "Details", new { id = record.RecordId })</li>
+  }
+</ul>
+
+<p>@Html.ActionLink("Add new record", "Create")</p>
