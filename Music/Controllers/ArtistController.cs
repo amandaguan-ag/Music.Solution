@@ -49,6 +49,7 @@ namespace Music.Controllers
             }
 
             Record newRecord = new Record(recordTitle);
+            newRecord.Save();
             foundArtist.AddRecord(newRecord);
             List<Record> artistRecords = foundArtist.Records;
             model.Add("artist", foundArtist);
