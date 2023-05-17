@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Music.Models;
 
@@ -12,19 +13,25 @@ namespace Music
 
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddDbContext<MusicContext>(
+                              dbContextOptions => dbContextOptions
+                                .UseMySql(
+                                  builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
+                                )
+                              )
+                            );
+
             WebApplication app = builder.Build();
 
-            //   app.UseDeveloperExceptionPage();
+            // app.UseDeveloperExceptionPage();
             app.UseHttpsRedirection();
-            DBConfiguration.ConnectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.MapControllerRoute(
-              name: "default",
-              pattern: "{controller=Home}/{action=Index}/{id?}"
-            );
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

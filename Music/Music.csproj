@@ -4,8 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
-  <RecordGroup>
-    <PackageReference Include="MySqlConnector" Version="2.2.0" />
-  </RecordGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.0" />
+  </ItemGroup>
 
 </Project>
